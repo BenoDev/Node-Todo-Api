@@ -148,7 +148,7 @@ describe('PATCH /todos/:id', () =>{
 			expect(res.body.todo._id).toBe(hexId);
 			expect(res.body.todo.text).toBe(text);
 			expect(res.body.todo.completed).toBe(true);
-			expect(res.body.todo.completedAt).toBeTruthy();
+			expect(typeof res.body.todo.completedAt).toBe('number');
 		})
 		.end(done);
 	});
