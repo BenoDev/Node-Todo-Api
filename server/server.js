@@ -117,6 +117,11 @@ app.get('/todos/:id', (req,res)=>{
 		
 	})
 
+	app.delete('/users/me/token', authenticate , (req,res)=>{
+		req.user.removeToken(req.token).then(()=>{
+			res.status(200).send()
+		}).catch(e=> res.stat(400).send());
+	});
 
 
 app.listen(port,()=>{
