@@ -11,10 +11,14 @@ let UserSchema = new mongoose.Schema({
 		minlength: 1,
 		trim : true , //remove all spaces at the start and end
 		unique : true,
-		validate :{
-		validator: validator.isEmail,
-		message : '{VALUE} is not valid email'
-		}
+		validate:{
+		validator: (value)=>{
+						return validator.isEmail(value);
+					},
+					 message:'{VALUE} is not a valid Email'
+
+		},
+
 	},
 	password: {
 		type:String,
@@ -45,7 +49,7 @@ UserSchema.methods.generateAuthToken = function () {
 	let access = 'auth';
 	let token = jwt.sign({_id: user._id.toHexString(),access}, 'asd123').toString();
 
-	user.tokens.push({access,token})
+	user.tokens = user.tokens.concat({access,token})
 	return user.save().then(()=>{
 		return token;
 	});
